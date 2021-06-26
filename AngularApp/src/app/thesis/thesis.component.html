@@ -1,0 +1,88 @@
+<div class = "container">
+    <div class="row">
+        <div class="col s12">
+            <div class="card">
+                <div class="card-content white-text">
+                    <div class="row">
+                        <div class="col s5">
+                            <!-- Search Form -->
+                            <form>
+                                <div class="row">
+                                <div class="input-field col s12">
+                                    <h5>Search Document</h5>
+                                    <input type="text" name="searchText" placeholder="Enter Title, Author, Course, or Type" [(ngModel)]="searchText">
+                                </div>
+                                </div>
+                            </form>
+                            <!-- End of Search Form -->
+                            <h5>Add Document</h5>
+                            <form #thesisForm="ngForm" (ngSubmit)="onSubmit(thesisForm)">
+                                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="thesisService.selectedThesis._id">
+                                <div class="row">
+                                <div class="input-field col s12">
+                                    <input type="text" name="title" #name="ngModel" [(ngModel)]="thesisService.selectedThesis.title" placeholder="Thesis Title" required>
+                                    <label>Title: 
+                                        <label class="red-text">*</label>
+                                    </label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <input type="text" name="author" #name="ngModel" [(ngModel)]="thesisService.selectedThesis.author" placeholder="e.g. John Doe">
+                                    <label>Author: 
+                                        <label class="red-text"></label>
+                                    </label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <input type="text" name="course" #name="ngModel" [(ngModel)]="thesisService.selectedThesis.course" placeholder="e.g. BS-IT">
+                                    <label>Course: 
+                                        <label class="red-text"></label>
+                                    </label>
+                                </div>
+                                <div class="input-field col s12">
+                                    <input type="text" name="type" #name="ngModel" [(ngModel)]="thesisService.selectedThesis.type" placeholder="e.g. Journal">
+                                    <label>Type: 
+                                        <label class="red-text"></label>
+                                    </label>
+                                </div> 
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <button class="btn btn-custom right" type="button" (click)="resetForm(thesisForm)">Clear Fields</button>
+                                        <button class="btn btn-custom right" type="Submit" [disabled]="!thesisForm.valid">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col s7">
+                            <table class="responsive-table highlight">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Author</th>
+                                        <th>Course</th>
+                                        <th>Type</th>
+                                        <th></th> 
+                                    </tr>
+                                </thead>
+                                <!-- Show All Records | Filter Records Based on Search -->
+                                <tr *ngFor="let ths of thesisService.theses | filter:searchText">
+                                    <td>{{ths.title}}</td> 
+                                    <td>{{ths.author}}</td> 
+                                    <td>{{ths.course}}</td> 
+                                    <td>{{ths.type}}</td>
+                                    <td>
+                                        <a class="action-btn" (click)="onEdit(ths)">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                        <a class="action-btn" (click)="onDelete(ths._id, thesisForm)">
+                                            <i class="material-icons">delete</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
